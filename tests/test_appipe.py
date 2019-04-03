@@ -46,12 +46,13 @@ class PipelineTestSuite(lsst.utils.tests.TestCase):
         except pexExcept.NotFoundError:
             raise unittest.SkipTest("ap_pipe_testdata not set up")
 
+        cls.config = ApPipeTask.ConfigClass()
+        cls.config.load(os.path.join(cls.datadir, "config", "apPipe.py"))
+        cls.config.ppdb.db_url = "sqlite://"
+        cls.config.ppdb.isolation_level = "READ_UNCOMMITTED"
+
     def setUp(self):
         self.butler = dafPersist.Butler(inputs={'root': self.datadir})
-        self.config = ApPipeTask.ConfigClass()
-        self.config.load(os.path.join(self.datadir, "config", "apPipe.py"))
-        self.config.ppdb.db_url = "sqlite://"
-        self.config.ppdb.isolation_level = "READ_UNCOMMITTED"
         self.dataId = {"visit": 413635, "ccdnum": 42}
 
     def testGenericRun(self):
