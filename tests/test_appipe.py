@@ -69,6 +69,14 @@ class PipelineTestSuite(lsst.utils.tests.TestCase):
                         mockAssociator.run.assert_called_once()
                         mockForcedSource.run.assert_called_once()
 
+    # test reuse keyword to ApPipeTask.runDataRef
+    # test that fields in Struct are None if we skip that subtask, and non-None otherwise
+    # test input to each subtask (without implementation-dependent assumptions)
+    # test calexp template code path
+    # failures:
+    #    - any subtask failing should cause the pipeline to fail
+    #    - Association fails with no database (either OperationalError or ProgrammingError)
+
 
 class MemoryTester(lsst.utils.tests.MemoryTestCase):
     pass
